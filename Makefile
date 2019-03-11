@@ -14,7 +14,7 @@ export $(shell sed 's/=.*//' $(cnf))
 VERSION=$(shell ./version.sh)
 DOCKER_COMMAND=docker-compose -f docker-compose.yml
 DOCKER_COMMAND_SWARM=docker-compose -f docker-compose-swarm.yml
-DOCKER_PACKAGE=nginx-php-redis
+DOCKER_PACKAGE=dr4g0nsr/nginx-php-redis
 DOCKER_PACKAGE_FULL=dr4g0nsr/${DOCKER_PACKAGE}
 
 # HELP
@@ -69,5 +69,5 @@ multitail: ## Show all logs at once in console
 push: ## Push image to docker hub
 	@docker push ${DOCKER_PACKAGE_FULL}
 
-swarm:
+swarm: ## Create docker swarm
 	${DOCKER_COMMAND_SWARM} up -d

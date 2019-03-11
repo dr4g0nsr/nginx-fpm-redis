@@ -3,7 +3,7 @@ version: '3.5'
 services:
 
     web:
-        image: nginx-php-redis:latest
+        image: dr4g0nsr/nginx-php-redis:latest
         #image: mclouddragutin/mcloud-nginx-php
         hostname: web
         container_name: web
