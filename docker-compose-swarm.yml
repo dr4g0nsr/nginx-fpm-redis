@@ -1,0 +1,62 @@
+version: '3.5'
+
+services:
+
+    web:
+        image: nginx-php-redis:latest
+        #image: mclouddragutin/mcloud-nginx-php
+        hostname: web
+        container_name: web
+        volumes:
+         - /etc/localtime:/etc/localtime:ro
+         - /etc/timezone:/etc/timezone:ro
+         - "./etc/nginx:/etc/nginx/conf.d"
+         - "./etc/ssl:/etc/ssl"
+         - "./web:/var/www/html"
+         - "./logs:/var/log/nginx"
+        ports:
+         - "80:80"
+         - "443:443"
+        ulimits:
+         nproc: 65535
+         nofile:
+          soft: 20000
+          hard: 40000
+        deploy:
+         resources:
+          limits:
+            cpus: '0.90'
+            memory: 2G
+          reservations:
+            cpus: '0.3'
+            memory: 512M
+        stop_grace_period: 5s
+        sysctls:
+         - net.ipv4.ip_local_port_range=5000 65000
+         - net.ipv4.conf.all.accept_redirects=0
+         - net.ipv4.conf.all.secure_redirects=0
+         - net.ipv4.conf.all.send_redirects=0
+        restart: always
+        healthcheck:
+         test: ["CMD", "/docker-healthcheck.sh"]
+         interval: 30s
+         timeout: 5s
+         retries: 3
+         start_period: 5s
+        stdin_open: true
+        tty: true
+        networks:
+         - local
+         - external
+
+    visualizer:
+        hostname: visualizer
+        container_name: visualizer
+        volumes:
+          - "/var/run/docker.sock:/var/run/docker.sock"
+        ports:
+          - "8080:8080"
+
+networks:
+    local:
+    external:
