@@ -14,7 +14,7 @@ export $(shell sed 's/=.*//' $(cnf))
 VERSION=$(shell ./version.sh)
 DOCKER_COMMAND=docker-compose -f docker-compose.yml
 DOCKER_COMMAND_SWARM=docker-compose -f docker-compose-swarm.yml
-DOCKER_PACKAGE=dr4g0nsr/nginx-php-redis
+DOCKER_PACKAGE=nginx-php-redis
 DOCKER_PACKAGE_FULL=dr4g0nsr/${DOCKER_PACKAGE}
 
 # HELP
