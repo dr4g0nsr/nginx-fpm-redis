@@ -47,17 +47,6 @@ services:
         tty: true
         networks:
          - local
-         - external
-
-    visualizer:
-        image: dockersamples/visualizer
-        hostname: visualizer
-        container_name: visualizer
-        volumes:
-          - "/var/run/docker.sock:/var/run/docker.sock"
-        ports:
-          - "8080:8080"
 
 networks:
     local:
-    external:
