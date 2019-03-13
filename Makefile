@@ -13,7 +13,7 @@ export $(shell sed 's/=.*//' $(cnf))
 # grep the version from the mix file
 VERSION=$(shell ./version.sh)
 DOCKER_COMMAND=docker-compose -f docker-compose.yml
-DOCKER_COMMAND_SWARM=docker-compose -f docker-compose-swarm.yml
+DOCKER_COMMAND_SWARM=docker stack deploy
 DOCKER_PACKAGE=nginx-php-redis
 DOCKER_PACKAGE_FULL=dr4g0nsr/${DOCKER_PACKAGE}
 
@@ -70,4 +70,7 @@ push: ## Push image to docker hub
 	@docker push ${DOCKER_PACKAGE_FULL}
 
 swarm: ## Create docker swarm
-	${DOCKER_COMMAND_SWARM} up -d
+	docker stack deploy --compose-file docker-compose-swarm.yml webswarm
+
+refresh: ## Reload images
+	@docker pull dr4g0nsr/nginx-php-redis:latest
