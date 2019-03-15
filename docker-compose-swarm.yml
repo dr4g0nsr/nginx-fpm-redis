@@ -9,7 +9,7 @@ services:
         container_name: web
         volumes:
          - /etc/localtime:/etc/localtime:ro
-         - ./timezone:/etc/timezone:ro
+#         - ./timezone:/etc/timezone:ro
          - "./etc/nginx:/etc/nginx/conf.d"
          - "./etc/ssl:/etc/ssl"
          - "./web:/var/www/html"
