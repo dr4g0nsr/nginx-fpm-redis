@@ -70,7 +70,7 @@ push: ## Push image to docker hub
 	@docker push ${DOCKER_PACKAGE_FULL}
 
 swarm: ## Create docker swarm
-	docker stack deploy --compose-file docker-compose-swarm.yml webswarm
+	docker stack deploy --compose-file docker-compose-swarm.yml web
 
 visualizer: ## Create docker visualizer
 	docker run -it -d -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock dockersamples/visualizer
