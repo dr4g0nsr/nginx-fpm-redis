@@ -3,7 +3,7 @@ FROM ubuntu:18.04
 LABEL maintainer="Dragutin Cirkovic <dragonmen@gmail.com>"
 
 # Define the ENV variable
-ENV php_ver "7.2"
+ENV php_ver "7.3"
 ENV php_conf /etc/php/${php_ver}/fpm/php.ini
 ENV supervisor_conf /etc/supervisor/conf.d/supervisord.conf
 ENV DEBIAN_FRONTEND=noninteractive
@@ -12,6 +12,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository ppa:ondrej/php
+RUN add-apt-repository ppa:ondrej/nginx
 RUN apt-get install -y curl wget gpg git nginx php${php_ver}-fpm php${php_ver}-cli supervisor tzdata curl sysstat \
 certbot nano zip multitail unzip redis apache2-utils
 
@@ -39,7 +40,7 @@ COPY conf/snippets/* /etc/nginx/snippets/
 #COPY conf/snippets/wordpress.conf /etc/nginx/snippets/wordpress.conf
 
 # Sock file potnt to /run/php/php-fpm.sock
-RUN sed -i -e 's/listen = \/run\/php\/php7.2-fpm.sock/listen = \/run\/php\/php-fpm.sock/g' /etc/php/7.2/fpm/pool.d/www.conf
+RUN sed -i -e 's/listen = \/run\/php\/php7.3-fpm.sock/listen = \/run\/php\/php-fpm.sock/g' /etc/php/7.3/fpm/pool.d/www.conf
 
 # Copy supervisor configuration
 COPY conf/supervisord.conf ${supervisor_conf}

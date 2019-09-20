@@ -1,39 +1,38 @@
 version: '3.5'
 
 services:
-
-    web:
-        image: dr4g0nsr/nginx-php-redis:latest
-        #image: mclouddragutin/mcloud-nginx-php
-        hostname: web
-        container_name: web
-        volumes:
-         - /etc/localtime:/etc/localtime:ro
-         - ./timezone:/etc/timezone:ro
-         - "./etc/nginx:/etc/nginx/conf.d"
-         - "./etc/ssl:/etc/ssl"
-         - "./web:/var/www/html"
-         - "./logs:/var/log/nginx"
-        ports:
-         - "80:80"
-         - "443:443"
-        sysctls:
-         - net.ipv4.ip_local_port_range=5000 65000
-         - net.ipv4.conf.all.accept_redirects=0
-         - net.ipv4.conf.all.secure_redirects=0
-         - net.ipv4.conf.all.send_redirects=0
-        restart: always
-        healthcheck:
-         test: ["CMD", "/docker-healthcheck.sh"]
-         interval: 30s
-         timeout: 5s
-         retries: 3
-         start_period: 5s
-        stdin_open: true
-        tty: true
-        networks:
-         - local
-         - external
+  webit:
+    image: dr4g0nsr/nginx-php-redis:latest
+    hostname: web
+    container_name: web
+    volumes:
+     - /etc/localtime:/etc/localtime:ro
+     - ./timezone:/etc/timezone:ro
+     - "./etc/nginx:/etc/nginx/conf.d"
+     - "./etc/ssl:/etc/ssl"
+     - "./web:/var/www/html"
+     - "./logs:/var/log/nginx"
+     - "./cache:/cache"
+    ports:
+     - "80:80"
+     - "443:443"
+    sysctls:
+     - net.ipv4.ip_local_port_range=5000 65000
+     - net.ipv4.conf.all.accept_redirects=0
+     - net.ipv4.conf.all.secure_redirects=0
+     - net.ipv4.conf.all.send_redirects=0
+    restart: always
+    healthcheck:
+     test: ["CMD", "/docker-healthcheck.sh"]
+     interval: 30s
+     timeout: 5s
+     retries: 3
+     start_period: 5s
+    stdin_open: true
+    tty: true
+    networks:
+     - local
+     - external
 
 networks:
     local:
