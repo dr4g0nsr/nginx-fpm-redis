@@ -13,6 +13,7 @@ RUN apt-get update
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository ppa:ondrej/php
 RUN add-apt-repository ppa:ondrej/nginx
+RUN apt-get update
 RUN apt-get install -y curl wget gpg git nginx php${php_ver}-fpm php${php_ver}-cli supervisor tzdata curl sysstat \
 certbot nano zip multitail unzip redis apache2-utils
 
