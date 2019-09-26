@@ -40,8 +40,17 @@ COPY conf/snippets/* /etc/nginx/snippets/
 #COPY conf/snippets/static.conf /etc/nginx/snippets/static.conf
 #COPY conf/snippets/wordpress.conf /etc/nginx/snippets/wordpress.conf
 
-# Sock file potnt to /run/php/php-fpm.sock
+# Sock file point to /run/php/php-fpm.sock
 RUN sed -i -e 's/listen = \/run\/php\/php7.3-fpm.sock/listen = \/run\/php\/php-fpm.sock/g' /etc/php/7.3/fpm/pool.d/www.conf
+
+# Change php defaults
+RUN sed -i -e 's/upload_max_filesize = 2M/upload_max_filesize = 200M/g' /etc/php/${php_ver}/fpm/php.ini
+RUN sed -i -e 's/max_file_uploads = 20/max_file_uploads = 50/g' /etc/php/${php_ver}/fpm/php.ini
+RUN sed -i -e 's/memory_limit = 128M/memory_limit = 256M/g' /etc/php/${php_ver}/fpm/php.ini
+RUN sed -i -e 's/max_execution_time = 30/max_execution_time = 120/g' /etc/php/${php_ver}/fpm/php.ini
+RUN sed -i -e 's/;max_input_nesting_level = 64/max_input_nesting_level = 256/g' /etc/php/${php_ver}/fpm/php.ini
+RUN sed -i -e 's/;max_input_vars = 1000/max_input_vars = 2000/g' /etc/php/${php_ver}/fpm/php.ini
+RUN sed -i -e 's/post_max_size = 8M/post_max_size = 64M/g' /etc/php/${php_ver}/fpm/php.ini
 
 # Copy supervisor configuration
 COPY conf/supervisord.conf ${supervisor_conf}
